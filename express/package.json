@@ -1,0 +1,18 @@
+{
+  "name": "westage-hackday",
+  "private": true,
+  "scripts": {
+    "start": "yarn run build && node ./bin/westage-hackday.js",
+    "build": "webpack --config build/webpack.dev.js"
+  },
+  "devDependencies": {
+    "@types/es6-promise": "0.0.32",
+    "@types/node": "6.0.48",
+    "ts-loader": "2.0.3",
+    "tslint": "4.5.1",
+    "tslint-loader": "3.4.3",
+    "typescript": "2.2.2",
+    "webpack": "2.3.2",
+    "yarn": "0.21.3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "baseUrl": ".",
+    "paths": { "*": [ "src/*" ] },
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "typeRoots": [ "@types/", "node_modules/@types/" ],
+    "types": [ "es6-promise" ]
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": {
+    "compileOnSave": false,
+    "buildOnSave": false,
+    "rewriteTsconfig": false
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "filesGlob": [
+    "typings.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
+}
