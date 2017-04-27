@@ -26,5 +26,11 @@ module.exports = {
     extensions: ['.js', '.ts']
   },
 
-  devtool: 'source-map'
+  devtool: 'source-map',
+
+  target: 'node',
+
+  node: {
+    fs: 'empty'
+  }
 }

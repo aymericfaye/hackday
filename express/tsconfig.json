@@ -5,13 +5,13 @@
     "paths": { "*": [ "src/*" ] },
     "module": "commonjs",
     "target": "es5",
-    "sourceMap": true,
-    "noImplicitAny": true,
+    "sourceMap": false,
+    "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
     "typeRoots": [ "@types/", "node_modules/@types/" ],
-    "types": [ "es6-promise" ]
+    "types": [ "es6-promise", "express", "express-serve-static-core", "node" ]
   },
   "compileOnSave": false,
   "buildOnSave": false,
