@@ -1,4 +1,5 @@
 const path = require('path')
+const externals = require('webpack-node-externals');
 
 const root = path.resolve(__dirname, '..')
 const output = path.resolve(root, 'bin')
@@ -27,8 +28,8 @@ module.exports = {
   },
 
   devtool: 'source-map',
-
   target: 'node',
+  externals: [externals()],
 
   node: {
     fs: 'empty'
