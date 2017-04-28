@@ -137,39 +137,45 @@ component {
   display: block;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Light.woff') format('woff'), url('/assets/fonts/OpenSans-Light.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Thin.woff') format('woff'), url('/assets/fonts/OpenSans-Thin.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Regular.woff') format('woff'), url('/assets/fonts/OpenSans-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Medium.woff') format('woff'), url('/assets/fonts/OpenSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Semibold.woff') format('woff'), url('/assets/fonts/OpenSans-Semibold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Bold.woff') format('woff'), url('/assets/fonts/OpenSans-Bold.ttf') format('truetype');
   font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Extrabold.woff') format('woff'), url('/assets/fonts/OpenSans-Extrabold.ttf') format('truetype');
+  font-weight: 800;
   font-style: normal;
 }
 *,
@@ -188,7 +194,7 @@ body {
   background-color: #FAFAFA;
   color: #505050;
   font-family: "OpenSans", "Arial", "sans-serif";
-  font-size: 1.6rem;
+  font-size: 1.2rem;
 }
 #screenLayer {
   overflow-x: hidden;
@@ -200,59 +206,84 @@ body {
   transform: translate3d(0, 0, 0);
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Light.woff') format('woff'), url('/assets/fonts/OpenSans-Light.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Thin.woff') format('woff'), url('/assets/fonts/OpenSans-Thin.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Regular.woff') format('woff'), url('/assets/fonts/OpenSans-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Medium.woff') format('woff'), url('/assets/fonts/OpenSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Semibold.woff') format('woff'), url('/assets/fonts/OpenSans-Semibold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Bold.woff') format('woff'), url('/assets/fonts/OpenSans-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Extrabold.woff') format('woff'), url('/assets/fonts/OpenSans-Extrabold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+.contentSearch-Z9VMz {
+  display: flex;
 }
 .search-2uvUu {
   background-color: white;
   height: 100px;
   width: 85%;
   position: relative;
-  padding: 5px 10px;
+  padding: 10px;
   border-radius: 2px;
   box-shadow: 0px 1px 4px 0 #888888;
 }
 .searchOption-3hEbd {
   font-size: 1.2rem;
   color: #505050;
+  width: 95%;
+  display: flex;
+  flex: wrap;
+  align-items: center;
+}
+.searchOption-3hEbd .criteria-3whUf {
+  margin-right: 10px;
+}
+.searchOption-3hEbd .criteria-3whUf.selected-3y4F9 {
+  color: #FF886B;
+}
+.searchOption-3hEbd .criteria-3whUf:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 .customInput-23gmZ {
   width: 100%;
   height: 80%;
   border: none;
   font-size: 4.5rem;
+  font-weight: 800;
+  font-family: "OpenSans", "Arial", "sans-serif";
   color: #505050;
 }
 .customInput-23gmZ:focus {
@@ -282,46 +313,121 @@ body {
   width: 1100px;
   margin: 20px auto;
 }
+.button-16Blf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  color: #AFB4B8;
+  border: solid 1px #AFB4B8;
+  border-radius: 2px;
+  color: #FF886B;
+  margin: 20px 0;
+  width: 190px;
+}
+.button-16Blf span {
+  margin-left: 10px;
+  font-family: "OpenSans", "Arial", "sans-serif";
+}
+.button-16Blf:hover {
+  background-color: #FF886B;
+  border: solid 1px #FF886B;
+  color: white;
+  cursor: pointer;
+}
+.button-16Blf span {
+  color: #AFB4B8;
+}
+.button-16Blf:hover span {
+  color: white;
+}
 .content-2fLw3 {
   width: 1100px;
   margin: 0 auto;
   margin-top: 40px;
-  display: flex;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Light.woff') format('woff'), url('/assets/fonts/OpenSans-Light.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Thin.woff') format('woff'), url('/assets/fonts/OpenSans-Thin.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Regular.woff') format('woff'), url('/assets/fonts/OpenSans-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Medium.woff') format('woff'), url('/assets/fonts/OpenSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Semibold.woff') format('woff'), url('/assets/fonts/OpenSans-Semibold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }
 @font-face {
-  font-family: 'San Francisco';
+  font-family: 'OpenSans';
   src: url('/assets/fonts/OpenSans-Bold.woff') format('woff'), url('/assets/fonts/OpenSans-Bold.ttf') format('truetype');
   font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Extrabold.woff') format('woff'), url('/assets/fonts/OpenSans-Extrabold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Light.woff') format('woff'), url('/assets/fonts/OpenSans-Light.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Thin.woff') format('woff'), url('/assets/fonts/OpenSans-Thin.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Regular.woff') format('woff'), url('/assets/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Medium.woff') format('woff'), url('/assets/fonts/OpenSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Semibold.woff') format('woff'), url('/assets/fonts/OpenSans-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Bold.woff') format('woff'), url('/assets/fonts/OpenSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Extrabold.woff') format('woff'), url('/assets/fonts/OpenSans-Extrabold.ttf') format('truetype');
+  font-weight: 800;
   font-style: normal;
 }
 .header-29EXr {
@@ -339,14 +445,18 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.header-29EXr .nav-Ajx9_ > .mainNav-3KI4m div {
+.header-29EXr .nav-Ajx9_ > .mainNav-3KI4m a {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  color: #AFB4B8;
   height: 100%;
   border-bottom: solid 2px transparent;
 }
-.header-29EXr .nav-Ajx9_ > .mainNav-3KI4m div:hover {
+.header-29EXr .nav-Ajx9_ > .mainNav-3KI4m a.active-1md5Z,
+.header-29EXr .nav-Ajx9_ > .mainNav-3KI4m a:hover {
   cursor: pointer;
+  color: #505050;
   border-bottom: solid 2px #FF886B;
 }
 .header-29EXr .nav-Ajx9_ .mainNav-3KI4m,
@@ -366,6 +476,9 @@ body {
 }
 .header-29EXr .nav-Ajx9_ .selection-24HAN,
 .header-29EXr .nav-Ajx9_ .search-2slN1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 5px 10px;
   color: #AFB4B8;
   border: solid 1px #AFB4B8;
@@ -374,6 +487,7 @@ body {
 .header-29EXr .nav-Ajx9_ .selection-24HAN span,
 .header-29EXr .nav-Ajx9_ .search-2slN1 span {
   margin-left: 10px;
+  font-family: "OpenSans", "Arial", "sans-serif";
 }
 .header-29EXr .nav-Ajx9_ .selection-24HAN:hover,
 .header-29EXr .nav-Ajx9_ .search-2slN1:hover {

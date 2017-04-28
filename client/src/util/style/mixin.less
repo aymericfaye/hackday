@@ -1,0 +1,25 @@
+@import "../../../src/util/style/index.less";
+
+.button() {
+  .alignment();
+  padding: 5px 10px;
+  color: @grey;
+  border: solid 1px @grey;
+  border-radius: 2px;
+  span {
+    margin-left: 10px;
+    font-family: @font;
+  }
+  &:hover {
+    background-color: @orange;
+    border: solid 1px @orange;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.alignment() {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

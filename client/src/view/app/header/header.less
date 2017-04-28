@@ -1,10 +1,6 @@
 @import "../../../../src/util/style/index.less";
 
-.alignment() {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+
 
 .header {
   display: flex;
@@ -23,14 +19,17 @@
     justify-content: space-between;
     align-items: center;
     
-    > .mainNav div {
+    > .mainNav a {
       display: flex;
       align-items: center;
+      text-decoration: none;
+      color: @grey;
       height: 100%;
       border-bottom: solid 2px transparent;
 
-      &:hover {
+      &.active, &:hover {
         cursor: pointer;
+        color: @text-color;
         border-bottom: solid 2px @orange;
       }
     }
@@ -55,17 +54,7 @@
     // }
 
     .selection, .search {
-      padding: 5px 10px;
-      color: @grey;
-      border: solid 1px @grey;
-      border-radius: 2px;
-      span { margin-left: 10px }
-      &:hover {
-        background-color: @orange;
-        border: solid 1px @orange;
-        color: white;
-        cursor: pointer;
-      }
+      .button()
     }
 
     .avatar {

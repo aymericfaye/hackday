@@ -113,6 +113,12 @@ var router = express_1.Router();
 router.get('/', function (req, res) {
     res.render('index');
 });
+router.get('/search', function (req, res) {
+    res.render('index');
+});
+router.get('/advancedSearch', function (req, res) {
+    res.render('index');
+});
 exports.AppController = router;
 
 

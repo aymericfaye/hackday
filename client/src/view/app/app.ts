@@ -1,20 +1,19 @@
 require('./app.less')
-const styles = require('./search/search.less')
 
-
-import { h, Message, Component, ConnectParams, RenderParams, Node } from 'kaiju'
-import { RouteDef } from 'router'
+import { h, Component, ConnectParams, RenderParams, Node, VNode } from 'kaiju'
+import { RouteDef, Route, Router } from 'router'
 
 import Search from 'view/app/search'
+import AdvancedSearch from 'view/app/advancedSearch'
 import Header from 'view/app/header'
 
-import { Tick } from 'commons/svg'
 
 export default function route() {
   return RouteDef('/', <Params>{}, {
     enter: router => (route, child) => app({ child, router, route }),
     children: {
-      search: Search()
+      search: Search(),
+      advancedSearch: AdvancedSearch()
     }
   })
 }
@@ -26,7 +25,11 @@ function app(props: Props) {
 
 type Params = {}
 
-type Props = {}
+type Props = {
+  router: Router
+  route: Route<Params>
+  child: VNode
+}
 
 type State = {}
 
@@ -35,28 +38,13 @@ function initState() {
   } as State
 }
 
-const changeSearch = Message<Event>('changeSearch')
-
 function connect({}: ConnectParams<Props, State>) {}
 
-function render({}: RenderParams<Props, State>): Node[] {
+function render({ props }: RenderParams<Props, State>): Node[] {
+  const { child, route } = props
 
   return [
-    Header(),
-    h(`div.${ styles.content}`, [
-      h(`div.${ styles.search }`, [
-        h(`div.${styles.searchOption }`, 'kljs'),
-        h(`input.${ styles.customInput }`, {
-          attrs: { placeholder: 'artiste'},
-          events: { change: changeSearch } }
-        ),
-        h(`div.${ styles.validate }`, Tick())
-      ]),
-      h(`div.${ styles.result }`, [
-        h(`p`, '+10k'),
-        h(`p`, 'artistes')
-      ])
-    ]),
-    h(`div.${ styles.cards }`, 'klsdfn')
+    Header(route),
+    h('div', child),
   ]
 }

@@ -1,12 +1,15 @@
 @import "../../../../src/util/style/index.less";
 
+.contentSearch {
+  display: flex;
+}
 
 .search {
-  background-color :white;
+  background-color: white;
   height: 100px;
   width: 85%;
   position: relative;
-  padding: 5px 10px;
+  padding: 10px;
   border-radius: 2px;
   box-shadow: 0px 1px 4px 0 #888888;
 }
@@ -14,6 +17,22 @@
 .searchOption {
   font-size: 1.2rem;
   color: @text-color;
+  width: 95%;
+
+  display: flex;
+  flex: wrap;
+  align-items: center;
+
+  .criteria {
+    margin-right: 10px;
+    &.selected {
+      color: @orange;
+    }
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
 }
 
 .customInput {
@@ -21,6 +40,8 @@
   height: 80%;
   border: none;
   font-size: 4.5rem;
+  font-weight: 800;
+  font-family: @font;
   color: @text-color;
 
   &:focus {
@@ -34,7 +55,7 @@
   color: white;
   right: -20px;
   border-radius: 2px;
-  width:50px;
+  width: 50px;
   height: 50px;
   top: 25px;
 
@@ -57,10 +78,22 @@
   margin: 20px auto;
 }
 
+
+.button {
+  .button();
+  color: @orange;
+  margin: 20px 0;
+  width: 190px;
+  span {
+    color: @grey;
+  }
+  &:hover {
+    span { color: white; }
+  }
+}
+
 .content {
   width: 1100px;
   margin: 0 auto;
   margin-top: 40px;
-
-  display: flex;
 }

@@ -8,4 +8,12 @@ router.get('/', (req: Request, res: Response) => {
   res.render('index')
 });
 
+router.get('/search', (req: Request, res: Response) => {
+  res.render('index')
+});
+
+router.get('/advancedSearch', (req: Request, res: Response) => {
+  res.render('index')
+});
+
 export const AppController: Router = router
