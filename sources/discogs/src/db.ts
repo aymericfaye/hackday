@@ -58,7 +58,7 @@ const ArtistSchema = new mongoose.Schema({
   date: { type : Date, default : Date.now }
 })
 
-export const ArtistModel = mongoose.model('artist', ArtistSchema)
+export const ArtistModel = mongoose.model('discogs', ArtistSchema)
 export const ReleaseModel = mongoose.model('release', ReleaseSchema)
 
 export function DBConnect() {
