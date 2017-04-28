@@ -1,0 +1,3 @@
+db.lastfm.createIndex({name: "text"})
+db.discogs.createIndex({artistName: "text"})
+db.soundclouds.createIndex({artistName: "text"})
