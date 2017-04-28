@@ -11,11 +11,13 @@ html { font-size: 62.5% }
 html, body { overflow: hidden }
 
 body {
-  background-color: @mainBg;
+  background-color: @bg;
+  color: @text-color;
   font-family: @font;
   font-size: @fontSize;
-  color: @mainBlue;
 }
+
+
 
 :global {
 
@@ -32,13 +34,4 @@ body {
     // @media @desktop {}
   }
 
-  body.has-sticky-footer {
-    #screenLayer {
-      height: ~"calc(100vh - @{footerHeight})";
-    }
-  }
-
-  .logo {
-    margin: 20px;
-  }
 }

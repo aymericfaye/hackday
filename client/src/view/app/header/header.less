@@ -1,0 +1,78 @@
+@import "../../../../src/util/style/index.less";
+
+.alignment() {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header {
+  display: flex;
+  height: 50px;
+
+  background-color: white;
+  box-shadow: 0px 2px 4px 0 #888888;
+
+  color: @grey;
+  font-size: 1.2rem;
+
+  .nav {
+    width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    > .mainNav div {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      border-bottom: solid 2px transparent;
+
+      &:hover {
+        cursor: pointer;
+        border-bottom: solid 2px @orange;
+      }
+    }
+
+    .mainNav, .buttons, .search, .selection {
+      .alignment()
+    }
+
+    .mainNav {
+      height: 100%;
+      width: 40%
+    }
+
+    .buttons { width: 30% }
+
+    // .search {
+    //   padding: 5px 10px;
+    //   color: white;
+    //   background-color: @orange;
+    //   border-radius: 2px;
+    //   span { margin-left: 20px }
+    // }
+
+    .selection, .search {
+      padding: 5px 10px;
+      color: @grey;
+      border: solid 1px @grey;
+      border-radius: 2px;
+      span { margin-left: 10px }
+      &:hover {
+        background-color: @orange;
+        border: solid 1px @orange;
+        color: white;
+        cursor: pointer;
+      }
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+      background-image: url('/public/img/avatar.png');
+    }
+  }
+}

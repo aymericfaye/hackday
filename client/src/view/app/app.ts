@@ -1,15 +1,20 @@
 require('./app.less')
+const styles = require('./search/search.less')
 
-import { h, Component, ConnectParams, RenderParams, Node } from 'kaiju'
+
+import { h, Message, Component, ConnectParams, RenderParams, Node } from 'kaiju'
 import { RouteDef } from 'router'
 
-import Index from 'view/index'
+import Search from 'view/app/search'
+import Header from 'view/app/header'
+
+import { Tick } from 'commons/svg'
 
 export default function route() {
   return RouteDef('/', <Params>{}, {
     enter: router => (route, child) => app({ child, router, route }),
     children: {
-      index: Index()
+      search: Search()
     }
   })
 }
@@ -30,11 +35,28 @@ function initState() {
   } as State
 }
 
+const changeSearch = Message<Event>('changeSearch')
+
 function connect({}: ConnectParams<Props, State>) {}
 
 function render({}: RenderParams<Props, State>): Node[] {
 
   return [
-    h('div', 'Hello')
+    Header(),
+    h(`div.${ styles.content}`, [
+      h(`div.${ styles.search }`, [
+        h(`div.${styles.searchOption }`, 'kljs'),
+        h(`input.${ styles.customInput }`, {
+          attrs: { placeholder: 'artiste'},
+          events: { change: changeSearch } }
+        ),
+        h(`div.${ styles.validate }`, Tick())
+      ]),
+      h(`div.${ styles.result }`, [
+        h(`p`, '+10k'),
+        h(`p`, 'artistes')
+      ])
+    ]),
+    h(`div.${ styles.cards }`, 'klsdfn')
   ]
 }
