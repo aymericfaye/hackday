@@ -131,8 +131,8 @@ const searchTerms8 = [
   'Rendez-vous','FAIRE','OnNZE Onze','Paco Tyson','H-Burns','Sameer Ahmad','Georgia','Mild High Club'
 ]
 
-// DBConnect()
-// Promise.all(searchTerms.map(SearchArtist)).then().catch().then(DBClose)
-
 DBConnect()
-SearchArtist('Radiohead').then().catch().then(DBClose)
+Promise.all(searchTerms.map(SearchArtist)).then().catch().then(DBClose)
+
+//DBConnect()
+//SearchArtist('Radiohead').then().catch().then(DBClose)
