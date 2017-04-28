@@ -2,7 +2,7 @@
   "name": "discogs-batch",
   "private": true,
   "scripts": {
-    "start": "yarn build && node ./bin/main.js",
+    "start": "yarn build && cd bin && node main.js",
     "build": "tsc",
     "watch": "tsc --watch"
   },

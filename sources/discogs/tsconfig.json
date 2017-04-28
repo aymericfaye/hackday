@@ -8,6 +8,7 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "outDir": "bin",
+    "rootDir": "src",
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
@@ -25,8 +26,6 @@
     "node_modules"
   ],
   "filesGlob": [
-    "typings.d.ts",
-    "classnames.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ]

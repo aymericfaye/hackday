@@ -2,51 +2,15 @@ import * as immutable from 'immutable'
 import fetch from 'node-fetch'
 import * as mongoose from 'mongoose'
 
-import * as conf from 'conf/app.conf'
+import { ArtistModel, ReleaseModel, DBConnect, DBClose } from './db'
+import { UsersResult, DiscogsResult } from './models'
 
-(mongoose as any).Promise = global.Promise
+const DISCOGS_ACCESS_KEY = 'JNmoljCnFZGAqLwkiDoY'
+const DISCOGS_ACCESS_SECRET = 'TbvVlZIHvXOTorUwkqGZSpZLwHvlzYyF'
 
-function WestageDBConnect() {
-  mongoose.connect('mongodb://' + conf.WESTAGE_USER + ':'+ conf.WESTAGE_PWD + '@'+ conf.WESTAGE_HOST + '/'+ conf.WESTAGE_DB, function(err) {
-    if (err) { throw err }
-  })
-}
-
-function WestageDBDisconnect() {
-  mongoose.connection.close()
-}
-
-function searchSoundcloudHTTP(url: string, max_pages: number) {
-  function searchRec(url: string, nb_pages: number, usersResults) {
-    return fetch(url).then(function (response) {
-      var contentType = response.headers.get('content-type')
-      if (contentType && contentType.indexOf("application/json") !== 1) {
-        return response.json().then(function (users) {
-          nb_pages++
-          for (let user of users.collection) {
-            usersResults.push({
-              id: user.id,
-              name: user.username,
-              data: user
-            })
-          }
-          if (users.next_href != null && nb_pages < max_pages) {
-            return searchRec(users.next_href, nb_pages, usersResults)
-          } else {
-            return usersResults
-          }
-        })
-      } else {
-        return usersResults
-      }
-    });
-  }
-  return searchRec(url, 0, [])
-}
-
-function searchDiscogsHTTP(url){
-  function searchRec(url, nb_pages, usersResults) {
-    return fetch(url).then(function (response) {
+function SearchDiscogsHTTP(url: string): Promise<Array<UsersResult>> {
+  function SearchRec(url: string, nb_pages: number, usersResults: Array<UsersResult>) {
+    return fetch(url).then(response => {
       var contentType = response.headers.get('content-type')
       if (contentType && contentType.indexOf("application/json") !== 1) {
         return response.json().then(function (users) {
@@ -58,6 +22,7 @@ function searchDiscogsHTTP(url){
               data: user
             })
           }
+          // Fetch the next page here if needed
           return usersResults
         })
       } else {
@@ -65,72 +30,52 @@ function searchDiscogsHTTP(url){
       }
     })
   }
-  return searchRec(url, 0, [])
+  return SearchRec(url, 0, [])
 }
 
-var artistSourceSchema = new mongoose.Schema({
-  source : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
-  extId : String,
-  data : String,
-  date : { type : Date, default : Date.now }
-})
+function SearchOptions() {
+  const option = (key: string, value: string) => '&' + key + '=' + value
 
-var artistSchema = new mongoose.Schema({
-  artistName : String,
-  artistData : String,
-  searchTerm : String,
-  source : String,
-  extId : String,
-  date : { type : Date, default : Date.now }
-})
-
-var ArtistModel = mongoose.model('artist', artistSchema)
-var searchTerm = 'radiohead'
-var apiUrl = 'https://api.discogs.com/database/search?q='+ searchTerm +'&key='+ conf.DISCOGS_ACCESS_KEY +'&secret='+ conf.DISCOGS_ACCESS_SECRET
-
-const options = {
-  type : 'artist',
-  per_page : '100'
+  return option('type', 'artist')
+       + option('per_page', '1')
 }
 
-for(let key in options){
-  if(options.hasOwnProperty(key))
-    apiUrl += '&' + key + '=' + options[key]
-}
+function SearchArtist(searchTerm: string) {
+  const accessParam = '&key='+ DISCOGS_ACCESS_KEY +'&secret='+ DISCOGS_ACCESS_SECRET
+  const url = 'https://api.discogs.com/database/search?q='+ searchTerm + accessParam + SearchOptions()
 
-WestageDBConnect()
+  return SearchDiscogsHTTP(url).then(artists => {
+    for (let artist of artists) {
+      const apiArtistUrl = 'https://api.discogs.com/artists/'+ artist.id + '?' + accessParam
+      return fetch(apiArtistUrl).then(userDataResponse => {
+        return userDataResponse.json().then(userData => {
+          const apiArtistUrl = 'https://api.discogs.com/artists/'+ artist.id +'/releases?' + accessParam
+          return fetch(apiArtistUrl).then(releasesDataResponse => {
+            return releasesDataResponse.json().then(releasesData => {
+              const monArtiste = new ArtistModel({
+                artistName: artist.name,
+                searchTerm: searchTerm,
+                artistData: { userData: userData, releases: releasesData.releases },
+                source: 'discogs',
+                extId: artist.id
+              })
 
-searchDiscogsHTTP(apiUrl).then(function(sc_users){
-  for(let artist of sc_users){
-    console.log(artist)
-    var apiArtistUrl = 'https://api.discogs.com/artists/'+ artist.id +'?key='+ conf.DISCOGS_ACCESS_KEY +'&secret='+ conf.DISCOGS_ACCESS_SECRET
-    fetch(apiArtistUrl).then(function(userDataResponse) {
-      userDataResponse.json().then(function (userData) {
-        var apiArtistUrl = 'https://api.discogs.com/artists/'+ artist.id +'/releases?key='+ conf.DISCOGS_ACCESS_KEY +'&secret='+ conf.DISCOGS_ACCESS_SECRET
-        fetch(apiArtistUrl).then(function(releasesResponse) {
-          releasesResponse.json().then(function (releases) {
-            var artistData = artist.data
-            artistData.userData = userData
-            artistData.releases = releases
-            var monArtiste = new ArtistModel({
-              artistName : artist.name,
-              searchTerm : searchTerm,
-              artistExtSources : [{
-                source : 'discogs',
-                extId : artist.id,
-                data : artistData
-              }]
-            })
-            monArtiste.save(function (err) {
-              if (err) {
-                console.log( err.message)
-              }else{
-                console.log(artist.name + ' ajouté avec succès !')
-              }
+              return monArtiste.save(err => {
+                if (err) {
+                  console.log(err.message)
+                } else {
+                  console.log(artist.name + ' ajouté avec succès !')
+                }
+              })
             })
           })
         })
       })
-    })
-  }
-})
+    }
+  })
+}
+
+//SearchArtist('radiohead')
+
+DBConnect()
+Promise.all([SearchArtist('radiohead'), SearchArtist('sigur ros')]).then(() => DBClose()) // Should be 'finally'
