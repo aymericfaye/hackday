@@ -2,64 +2,78 @@ import * as immutable from 'immutable'
 import fetch from 'node-fetch'
 import * as mongoose from 'mongoose'
 
-import { ArtistModel, ReleaseModel, DBConnect, DBClose } from './db'
+import { ArtistModel, DBConnect, DBClose } from './db'
 import { UsersResult } from './models'
 
-const DISCOGS_ACCESS_KEY = 'JNmoljCnFZGAqLwkiDoY'
-const DISCOGS_ACCESS_SECRET = 'TbvVlZIHvXOTorUwkqGZSpZLwHvlzYyF'
+const SOUNDCLOUD_ACCESS_TOKEN = '0a470e03d5591f2bbd87aea2b6831308';
 
-function SearchDiscogsHTTP(url: string): Promise<Array<UsersResult>> {
-  function SearchRec(url: string, nb_pages: number, usersResults: Array<UsersResult>) {
+function SearchSoundcloudHTTP(url: string, max_pages: number): Promise<Array<UsersResult>> {
+  function searchRec(url: string, currentPage: number, usersResults: Array<UsersResult>) {
     return fetch(url).then(response => {
-      var contentType = response.headers.get('content-type')
+      var contentType = response.headers.get('content-type');
       if (contentType && contentType.indexOf("application/json") !== 1) {
-        return response.json().then(function (users) {
-          nb_pages++
-          for (let user of users.results) {
+        return response.json().then(users => {
+          const nextPage = currentPage + 1;
+          for (let user of users.collection) {
             usersResults.push({
               id: user.id,
-              name: user.title,
+              name: user.username,
               data: user
-            })
+            });
           }
-          // Fetch the next page here if needed
-          return usersResults
+          if (users.next_href != null && currentPage < max_pages) {
+            return searchRec(users.next_href, nextPage, usersResults);
+          } else {
+            return usersResults;
+          }
         })
       } else {
-        return usersResults
+        return usersResults;
       }
-    })
+    });
   }
-  return SearchRec(url, 0, [])
+  return searchRec(url, 0, []);
 }
 
 function SearchOptions() {
-  const option = (key: string, value: string) => '&' + key + '=' + value
+  var result = ''
+  const options = {
+    city: 'Paris',
+    //track_count : {from : 1},
+    //followers_count : {from : 1000},
+    limit: 50,
+    linked_partitioning: 1
+  };
 
-  return option('type', 'artist')
-       + option('per_page', '20')
+  for (let key in options){
+    if (options.hasOwnProperty(key))
+      result += '&' + key + '=' + options[key]
+  }
+  return result
 }
 
 function SearchArtist(searchTerm: string) {
-  const accessParam = 'key='+ DISCOGS_ACCESS_KEY +'&secret='+ DISCOGS_ACCESS_SECRET
-  const url = 'https://api.discogs.com/database/search?q='+ searchTerm + '&' + accessParam + SearchOptions()
+  var url = 'https://api.soundcloud.com/users?q=' + searchTerm + '&format=json&client_id=' + SOUNDCLOUD_ACCESS_TOKEN + SearchOptions()
 
-  return SearchDiscogsHTTP(url).then(artists => {
+  return SearchSoundcloudHTTP(url, 4).then(artists => {
     return Promise.all(artists.map(artist => {
-      const apiArtistUrl = 'https://api.discogs.com/artists/'+ artist.id + '?' + accessParam
-      return fetch(apiArtistUrl).then(userDataResponse => {
+      var userDataUrl = 'https://api.soundcloud.com/users/' + artist.id + '?format=json&client_id=' + SOUNDCLOUD_ACCESS_TOKEN
+      return fetch(userDataUrl).then(userDataResponse => {
         return userDataResponse.json().then(userData => {
-          const apiArtistUrl = 'https://api.discogs.com/artists/'+ artist.id +'/releases?' + accessParam
-          return fetch(apiArtistUrl).then(releasesDataResponse => {
-            return releasesDataResponse.json().then(releasesData => {
+          var profilesUrl = 'https://api.soundcloud.com/users/' + artist.id + '/web-profiles?format=json&client_id=' + SOUNDCLOUD_ACCESS_TOKEN
+          return fetch(profilesUrl).then(profilesResponse => {
+            return profilesResponse.json().then(profiles => {
               const monArtiste = new ArtistModel({
                 artistName: artist.name,
                 searchTerm: searchTerm,
-                artistData: { userData: userData, releases: releasesData.releases },
-                source: 'discogs',
+                artistData: { userData: userData, webProfiles: profiles },
+                source: 'soundcloud',
                 extId: artist.id
               })
-              return monArtiste.save(err => {
+
+              //console.log({ userData: userData, webProfiles: profiles });
+
+              return monArtiste.save(function (err) {
                 if (err) {
                   console.log(err.message)
                 } else {
@@ -121,4 +135,4 @@ const searchTerms8 = [
 // Promise.all(searchTerms.map(SearchArtist)).then().catch().then(DBClose)
 
 DBConnect()
-SearchArtist('Mild High Club').then().catch().then(DBClose)
+SearchArtist('Radiohead').then().catch().then(DBClose)

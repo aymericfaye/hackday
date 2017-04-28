@@ -1,0 +1,28 @@
+{
+  "name": "soundcloud-batch",
+  "private": true,
+  "scripts": {
+    "start": "yarn build && cd bin && node main.js",
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@types/body-parser": "0.0.34",
+    "@types/es6-promise": "0.0.32",
+    "@types/immutable": "3.8.7",
+    "@types/mongoose": "4.7.6",
+    "@types/node": "6.0.48",
+    "@types/node-fetch": "1.6.7",
+    "ts-loader": "2.0.3",
+    "tslint": "4.5.1",
+    "tslint-loader": "3.4.3",
+    "typescript": "2.2.2",
+    "yarn": "0.21.3"
+  },
+  "dependencies": {
+    "immutable": "3.8.1",
+    "mongoose": "4.9.6",
+    "node-fetch": "1.6.3",
+    "net": "1.0.2"
+  }
+}
