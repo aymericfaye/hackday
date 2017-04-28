@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -80,7 +80,7 @@ module.exports = require("express");
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = __webpack_require__(0);
-var path = __webpack_require__(4);
+var path = __webpack_require__(6);
 var app_1 = __webpack_require__(3);
 console.log('WeStage Hackday with Zengularity!');
 var app = express();
@@ -108,13 +108,16 @@ app.listen(port, function (err) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // Import only what we need from express
 var express_1 = __webpack_require__(0);
+var search_1 = __webpack_require__(4);
 // Assign router to the express.Router() instance
 var router = express_1.Router();
 router.get('/', function (req, res) {
     res.render('index');
 });
-router.get('/search', function (req, res) {
-    res.render('index');
+router.get('/search/:artistName', function (req, res) {
+    search_1.search(req.params.artistName)
+        .then(function (result) { return res.status(200).send(result); })
+        .catch(function (err) { return res.status(500).send(err); });
 });
 router.get('/advancedSearch', function (req, res) {
     res.render('index');
@@ -137,12 +140,58 @@ __export(__webpack_require__(2));
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var mongoose = __webpack_require__(5);
+mongoose.Promise = global.Promise;
+var WESTAGE_HOST = 'localhost:27017';
+var WESTAGE_DB = 'westage';
+var WESTAGE_USER = '';
+var WESTAGE_PWD = '';
+var ArtistSchema = new mongoose.Schema({
+    common: {
+        name: String
+    }
+});
+var ArtistModel = mongoose.model('artist', ArtistSchema, 'matched');
+function DBConnect() {
+    mongoose.connect('mongodb://' + WESTAGE_USER + ':' + WESTAGE_PWD + '@' + WESTAGE_HOST + '/' + WESTAGE_DB, function (err) {
+        if (err) {
+            throw err;
+        }
+    });
+}
+exports.DBConnect = DBConnect;
+function DBClose() {
+    mongoose.connection.close();
+}
+exports.DBClose = DBClose;
+DBConnect();
+function search(artistName) {
+    return ArtistModel.find({ 'common.name': artistName }, 'common lastfm discogs', function (err, artist) {
+        return artist;
+    });
+}
+exports.search = search;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("mongoose");
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(1);
