@@ -1,6 +1,6 @@
 const path    = require('path')
 const context = path.resolve(__dirname, '..')
-const output  = path.resolve(__dirname, '../../express/public')
+const output  = path.resolve(__dirname, '../../server/public')
 
 const resolves = require('./common/resolves')
 const modules  = require('./common/modules')

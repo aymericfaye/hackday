@@ -77,7 +77,7 @@ module.exports = require("express");
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(__dirname) {
+
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = __webpack_require__(0);
 var path = __webpack_require__(4);
@@ -87,7 +87,7 @@ var app = express();
 var port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(path.resolve(), 'src/views'));
-app.use(express.static(path.join(__dirname + 'public')));
+app.use('/public', express.static('public'));
 app.use('/', app_1.AppController);
 app.listen(port, function (err) {
     if (err) {
@@ -98,7 +98,6 @@ app.listen(port, function (err) {
     }
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ }),
 /* 2 */
