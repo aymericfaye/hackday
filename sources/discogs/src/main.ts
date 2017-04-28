@@ -75,7 +75,15 @@ function SearchArtist(searchTerm: string) {
   })
 }
 
-//SearchArtist('radiohead')
+const searchTerms = [
+  'radiohead',
+  'sigur ros'
+]
 
 DBConnect()
-Promise.all([SearchArtist('radiohead'), SearchArtist('sigur ros')]).then(() => DBClose()) // Should be 'finally'
+Promise.all(searchTerms.map(SearchArtist)).then().catch().then(() => DBClose()) // Should be 'finally'
+
+//SearchArtist('radiohead')
+
+// DBConnect()
+// Promise.all([SearchArtist('radiohead'), SearchArtist('sigur ros')]).then().catch().then(() => DBClose()) // Should be 'finally'
