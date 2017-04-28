@@ -37,15 +37,15 @@ function SearchOptions() {
   const option = (key: string, value: string) => '&' + key + '=' + value
 
   return option('type', 'artist')
-       + option('per_page', '1')
+       + option('per_page', '20')
 }
 
 function SearchArtist(searchTerm: string) {
-  const accessParam = '&key='+ DISCOGS_ACCESS_KEY +'&secret='+ DISCOGS_ACCESS_SECRET
-  const url = 'https://api.discogs.com/database/search?q='+ searchTerm + accessParam + SearchOptions()
+  const accessParam = 'key='+ DISCOGS_ACCESS_KEY +'&secret='+ DISCOGS_ACCESS_SECRET
+  const url = 'https://api.discogs.com/database/search?q='+ searchTerm + '&' + accessParam + SearchOptions()
 
   return SearchDiscogsHTTP(url).then(artists => {
-    for (let artist of artists) {
+    Promise.all(artists.map(artist => {
       const apiArtistUrl = 'https://api.discogs.com/artists/'+ artist.id + '?' + accessParam
       return fetch(apiArtistUrl).then(userDataResponse => {
         return userDataResponse.json().then(userData => {
@@ -59,7 +59,6 @@ function SearchArtist(searchTerm: string) {
                 source: 'discogs',
                 extId: artist.id
               })
-
               return monArtiste.save(err => {
                 if (err) {
                   console.log(err.message)
@@ -71,19 +70,55 @@ function SearchArtist(searchTerm: string) {
           })
         })
       })
-    }
+    }))
   })
 }
 
 const searchTerms = [
-  'radiohead',
-  'sigur ros'
+  'Radiohead','Noir Desir','Joy Division','Manu Le Malin','Jenifer Cardini','Grand Blanc',
+  '3SOMESISTERS','Agar Agar','Pegase','Killason','La fine equipe','Jules','La Canaille',
+  'Clara Luciani','Emae','Brisa Roche','Lea Paci','Ornette','Asgeir','Nina Johansson',
+  'Angie Robba','Mafia Spartiate','Burning peacocks','Temples of Youth','Phoenix',
+  'Klyne','The Black Lips','JVNE','Vince Staples','Actress','The XX','Zerolex',
+  'Bastien Keb','POW !','Sentiments','Ponty Mython','Chloe','Maceo Plex','Etienne de Crecy',
+  'Franck Ocean','Adult','Austra','Dirty Projectors','Douchka','Marcel Lune','DBFC',
+  'Rendez-vous','FAIRE','OnNZE Onze','Paco Tyson','H-Burns','Sameer Ahmad','Georgia','Mild High Club'
 ]
 
-DBConnect()
-Promise.all(searchTerms.map(SearchArtist)).then().catch().then(() => DBClose()) // Should be 'finally'
+const searchTerms1 = [
+  'Radiohead','Noir Désir','Joy Division','Manu Le Malin','Jenifer Cardini','Grand Blanc'
+]
 
-//SearchArtist('radiohead')
+const searchTerms2 = [
+  '3SOMESISTERS','Agar Agar','Pegase','Killason','La fine équipe','Jules','La Canaille'
+]
+
+const searchTerms3 = [
+  'Clara Luciani','Emaé','Brisa Roché','Lea Paci','Ornette','Asgeir','Nina Johansson'
+]
+
+const searchTerms4 = [
+  'Angie Robba','Mafia Spartiate','Burning peacocks','Temples of Youth','Phoenix'
+]
+
+const searchTerms5 = [
+  'Klyne','The Black Lips','JVNE','Vince Staples','Actress','The XX','Zerolex'
+]
+
+const searchTerms6 = [
+  'Bastien Keb','POW !','Sentiments','Ponty Mython','Chloé','Maceo Plex','Etienne de Crecy'
+]
+
+const searchTerms7 = [
+  'Franck Ocean','Adult','Austra','Dirty Projectors','Douchka','Marcel Lune','DBFC'
+]
+
+const searchTerms8 = [
+  'Rendez-vous','FAIRE','OnNZE Onze','Paco Tyson','H-Burns','Sameer Ahmad','Georgia','Mild High Club'
+]
 
 // DBConnect()
-// Promise.all([SearchArtist('radiohead'), SearchArtist('sigur ros')]).then().catch().then(() => DBClose()) // Should be 'finally'
+// Promise.all(searchTerms.map(SearchArtist))
+
+DBConnect()
+SearchArtist('Mild High Club')
