@@ -12,9 +12,16 @@ interface Props {
   route: Route<{}>
 }
 
+type Artiste = {
+  discogs: {
+    artistName: string
+  }
+}
+
 interface State {
   selectedCriterias: Array<string>
   searchValue: string
+  result?: Artiste[]
 }
 
 export default function route() {
@@ -29,6 +36,7 @@ export default function route() {
 const changeSearch = Message<Event>('changeSearch')
 const addCriteria = Message<[string, Event]>('addCriteria')
 const search =  Message<Event>('search')
+const updateResult = Message <Artiste[]> ('updateResult')
 
 function initState(): State {
   return {
@@ -37,7 +45,7 @@ function initState(): State {
   }
 }
 
-function connect({ on }: ConnectParams<Props, State>) {
+function connect({ msg, on }: ConnectParams<Props, State>) {
 
   on(addCriteria, (state, [criteria, _evt]) => {
   const isNewValue = state.selectedCriterias.find(v => v === criteria) === undefined
@@ -52,10 +60,17 @@ function connect({ on }: ConnectParams<Props, State>) {
     return update(state, { searchValue })
   })
 
-  on(search, (_state, _evt) => {
+  on(search, (state, _evt) => {
     console.log('search')
-    // TODO: connect
+    fetch(`search/${ state.searchValue }`).then(res => {
+      console.log(res)
+      res.json().then( res => {
+        msg.send(updateResult(res))
+      })
+    })
   })
+
+  on(updateResult, (state, value) => update(state, { result: value }) )
 }
 
 function render({ state }: RenderParams<Props, State>): VNode {
@@ -91,20 +106,28 @@ function render({ state }: RenderParams<Props, State>): VNode {
       Filtres(),
       h('span', 'Proximité géographique')
       ]),
-    h(`div.${ styles.cards }`, [
-      Card({
-        name: 'Muse',
-        src: 'public/img/Muse.jpg'
-      }),
-      Card({
-        name: 'Rage against the machine',
-        src: 'public/img/rage-against-the-machine.jpg'
-      }),
-      Card({
-        name: 'Radiohead',
-        src: 'public/img/radiohead.jpg'
-      }),
-    ])
+    h(`div.${ styles.cards }`,
+
+      state.result ? state.result.map(item => {
+        return Card({
+          name: item.discogs.artistName,
+          src: ''
+        })
+      }) : ''
+
+      // Card({
+      //   name: 'Muse',
+      //   src: 'public/img/Muse.jpg'
+      // }),
+      // Card({
+      //   name: 'Rage against the machine',
+      //   src: 'public/img/rage-against-the-machine.jpg'
+      // }),
+      // Card({
+      //   name: 'Radiohead',
+      //   src: 'public/img/radiohead.jpg'
+      // }),
+     )
   ])
 }
 
