@@ -4,6 +4,7 @@ import { h, Component, Message, ConnectParams, RenderParams, VNode } from 'kaiju
 import { RouteDef, Router, Route } from 'router'
 import { update } from 'immupdate'
 import { Tick, Filtres } from 'commons/svg'
+import Card from 'commons/widget/card'
 
 interface Props {
   child: VNode
@@ -13,6 +14,7 @@ interface Props {
 
 interface State {
   selectedCriterias: Array<string>
+  searchValue: string
 }
 
 export default function route() {
@@ -26,14 +28,17 @@ export default function route() {
 
 const changeSearch = Message<Event>('changeSearch')
 const addCriteria = Message<[string, Event]>('addCriteria')
+const search =  Message<Event>('search')
 
 function initState(): State {
   return {
-    selectedCriterias: []
+    selectedCriterias: [],
+    searchValue: ''
   }
 }
 
 function connect({ on }: ConnectParams<Props, State>) {
+
   on(addCriteria, (state, [criteria, _evt]) => {
   const isNewValue = state.selectedCriterias.find(v => v === criteria) === undefined
   const selectedVals = isNewValue
@@ -41,51 +46,41 @@ function connect({ on }: ConnectParams<Props, State>) {
     : state.selectedCriterias.filter(v => v === criteria ? undefined : criteria)
   return update(state, { selectedCriterias: selectedVals })
   })
+
+  on(changeSearch, (state, evt) => {
+    const searchValue = (evt.target as HTMLInputElement).value
+    return update(state, { searchValue })
+  })
+
+  on(search, (_state, _evt) => {
+    console.log('search')
+    // TODO: connect
+  })
 }
 
 function render({ state }: RenderParams<Props, State>): VNode {
 
-  const searchOptions = h(`div.${styles.searchOption }`, [
-    h(`div.${ styles.criteria }`, {
+  const criterias = ['critere1', 'critere2', 'critere3', 'critere4']
+  const criteriasFormat = criterias.map(criteria => {
+    return h(`div.${ styles.criteria }`, {
       events: {
-        click: addCriteria.with('criteria1')
+        click: addCriteria.with(criteria)
       },
       class: {
-        [styles.selected]: state.selectedCriterias.find(item => item === 'criteria1') !== undefined
-      } },
-      'critere1'),
-    h(`div.${ styles.criteria }`, {
-      events: {
-        click: addCriteria.with('criteria2')
-      },
-      class: {
-        [styles.selected]: state.selectedCriterias.find(item => item === 'criteria2') !== undefined
-      } }, 'critere2'),
-    h(`div.${ styles.criteria }`, {
-      events: {
-        click: addCriteria.with('criteria3')
-      },
-      class: {
-        [styles.selected]: state.selectedCriterias.find(item => item === 'criteria3') !== undefined
-      } }, 'critere3'),
-    h(`div.${ styles.criteria }`, {
-      events: {
-        click: addCriteria.with('criteria4')
-      },
-      class: {
-        [styles.selected]: state.selectedCriterias.find(item => item === 'criteria4') !== undefined
-      } }, 'critere4'),
-  ])
+        [styles.selected]: state.selectedCriterias.find(item => item === criteria) !== undefined
+      }
+    }, criteria)
+  })
 
   return  h(`div.${ styles.content}`, [
     h(`div.${styles.contentSearch }`, [
       h(`div.${ styles.search }`, [
-        searchOptions,
+        h(`div.${styles.searchOption }`, criteriasFormat),
         h(`input.${ styles.customInput }`, {
           attrs: { autofocus: true, placeholder: 'Artiste'},
-          events: { change: changeSearch } }
+          events: { input: changeSearch } }
         ),
-        h(`div.${ styles.validate }`, Tick())
+        h(`div.${ styles.validate }`, { events: { click: search } }, Tick())
       ]),
       h(`div.${ styles.result }`, [
         h(`p`, '+10k'),
@@ -96,7 +91,20 @@ function render({ state }: RenderParams<Props, State>): VNode {
       Filtres(),
       h('span', 'Proximité géographique')
       ]),
-    h(`div.${ styles.cards }`, 'klsdfn')
+    h(`div.${ styles.cards }`, [
+      Card({
+        name: 'Muse',
+        src: 'public/img/Muse.jpg'
+      }),
+      Card({
+        name: 'Rage against the machine',
+        src: 'public/img/rage-against-the-machine.jpg'
+      }),
+      Card({
+        name: 'Radiohead',
+        src: 'public/img/radiohead.jpg'
+      }),
+    ])
   ])
 }
 

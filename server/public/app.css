@@ -255,7 +255,7 @@ body {
   height: 100px;
   width: 85%;
   position: relative;
-  padding: 10px;
+  padding: 10px 40px;
   border-radius: 2px;
   box-shadow: 0px 1px 4px 0 #888888;
 }
@@ -269,6 +269,7 @@ body {
 }
 .searchOption-3hEbd .criteria-3whUf {
   margin-right: 10px;
+  font-size: 1.0rem;
 }
 .searchOption-3hEbd .criteria-3whUf.selected-3y4F9 {
   color: #FF886B;
@@ -276,6 +277,9 @@ body {
 .searchOption-3hEbd .criteria-3whUf:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+.searchOption-3hEbd .criteria-3whUf:active {
+  transition: background-color #ff886c;
 }
 .customInput-23gmZ {
   width: 100%;
@@ -302,6 +306,9 @@ body {
   align-items: center;
   justify-content: center;
 }
+.validate-VjDBq:hover {
+  cursor: pointer;
+}
 .result-t-0q2 {
   width: 15%;
   padding: 10px 30px;
@@ -310,8 +317,18 @@ body {
   font-size: 4.5rem;
 }
 .cards-1Qa7P {
+  display: flex;
+  flex-wrap: wrap;
   width: 1100px;
   margin: 20px auto;
+}
+.cards-1Qa7P > * {
+  flex-basis: 30%;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
+.cards-1Qa7P > *:last-child {
+  margin-right: 0;
 }
 .button-16Blf {
   display: flex;
@@ -345,6 +362,128 @@ body {
   width: 1100px;
   margin: 0 auto;
   margin-top: 40px;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Light.woff') format('woff'), url('/assets/fonts/OpenSans-Light.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Thin.woff') format('woff'), url('/assets/fonts/OpenSans-Thin.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Regular.woff') format('woff'), url('/assets/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Medium.woff') format('woff'), url('/assets/fonts/OpenSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Semibold.woff') format('woff'), url('/assets/fonts/OpenSans-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Bold.woff') format('woff'), url('/assets/fonts/OpenSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/assets/fonts/OpenSans-Extrabold.woff') format('woff'), url('/assets/fonts/OpenSans-Extrabold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+.card-1h8Bm {
+  position: relative;
+  width: 260px;
+  height: 400px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px 0 #888888;
+  background-color: #FAFAFA;
+}
+.card-1h8Bm .img-3iDVi {
+  width: 260px;
+  height: 175px;
+  background-color: #FF886B;
+  border-radius: 5px 5px 0 0;
+}
+.card-1h8Bm .musicStyleScroll-3OghU {
+  flex-wrap: wrap;
+  border-bottom: solid 1px #AFB4B8;
+  height: 150px;
+  overflow-x: scroll;
+  position: relative;
+}
+.card-1h8Bm .musicStyle-HTFGd {
+  display: flex;
+  width: 300px;
+  flex-wrap: wrap;
+}
+.card-1h8Bm .musicStyle-HTFGd > * {
+  margin: 5px;
+}
+.card-1h8Bm .itemStyle-8dCVa {
+  border: solid 1px #AFB4B8;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  color: #AFB4B8;
+  font-weight: 700;
+  height: 25px;
+}
+.artistName-1i-NR {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: -20px;
+  color: white;
+  font-size: 4.5rem;
+  display: flex;
+  font-weight: 800;
+  align-items: flex-end;
+  height: 175px;
+  text-shadow: 0 1px 8px #888888;
+}
+.stat-3ivyr {
+  align-items: center;
+  padding: 5px;
+  height: 25px;
+  display: flex;
+  color: #AFB4B8;
+}
+.stat-3ivyr > * {
+  margin: 10px;
+}
+.stat-3ivyr > * span {
+  margin: 5px;
+}
+.footer-3Yukt {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FF886B;
+  background-color: white;
+  border-radius: 0 0 5px 5px;
+}
+.footer-3Yukt:hover {
+  background-color: #FF886B;
+  color: white;
+  cursor: pointer;
 }
 @font-face {
   font-family: 'OpenSans';

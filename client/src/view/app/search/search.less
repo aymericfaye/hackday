@@ -9,7 +9,7 @@
   height: 100px;
   width: 85%;
   position: relative;
-  padding: 10px;
+  padding: 10px 40px;
   border-radius: 2px;
   box-shadow: 0px 1px 4px 0 #888888;
 }
@@ -25,12 +25,19 @@
 
   .criteria {
     margin-right: 10px;
+    font-size: 1.0rem;
+
     &.selected {
       color: @orange;
     }
+
     &:hover {
       text-decoration: underline;
       cursor: pointer;
+    }
+
+    &:active {
+      transition: background-color lighten(@orange, 0.1)
     }
   }
 }
@@ -62,6 +69,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .result {
@@ -74,8 +85,18 @@
 }
 
 .cards {
+  display: flex;
+  flex-wrap: wrap;
   width: 1100px;
   margin: 20px auto;
+
+  > * {
+    flex-basis: 30%;
+    margin-right: 30px;
+    margin-bottom: 30px;
+  
+    &:last-child { margin-right: 0; }
+  }
 }
 
 
