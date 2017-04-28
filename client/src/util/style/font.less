@@ -1,0 +1,18 @@
+@path: '/assets';
+
+.font-face(@fontFamily; @fontName: sans-serif; @fontWeight: normal; @fontStyle: normal) {
+  @font-face {
+    font-family: @fontFamily;
+    src: url('@{path}/fonts/@{fontName}.woff') format('woff'),
+    url('@{path}/fonts/@{fontName}.ttf') format('truetype');
+    font-weight: @fontWeight;
+    font-style: @fontStyle;
+  }
+}
+
+.font-face('San Francisco', 'sanfranciscodisplay-ultralight-webfont', 100);
+.font-face('San Francisco', 'sanfranciscodisplay-thin-webfont', 200);
+.font-face('San Francisco', 'sanfranciscodisplay-regular-webfont', 400);
+.font-face('San Francisco', 'sanfranciscodisplay-medium-webfont', 500);
+.font-face('San Francisco', 'sanfranciscodisplay-semibold-webfont', 600);
+.font-face('San Francisco', 'sanfranciscodisplay-bold-webfont', 700);

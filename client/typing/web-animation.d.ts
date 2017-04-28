@@ -1,0 +1,3 @@
+interface Element {
+  animate: any
+}

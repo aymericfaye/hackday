@@ -1,0 +1,34 @@
+{
+  "name": "client-westage-hackday",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "yarn run watch",
+    "build": "webpack -p --config build/prod.js",
+    "watch": "node_modules/webpack/bin/webpack.js --watch --config build/watch.js",
+    "devloop": "node node_modules/devloop/bin/main.js",
+    "pretest": "npm run build && tsc test/mocha.d.ts test/global.d.ts test/test.ts --outDir ./test --noImplicitAny --strictNullChecks",
+    "test": "mocha test/test.js --ui tdd"
+  },
+  "dependencies": {
+    "abyssa": "8.0.5",
+    "kaiju": "0.24.1",
+    "snabbdom": "0.6.7",
+    "space-lift": "0.1.1"
+  },
+  "devDependencies": {
+    "ansi_up": "1.3.0",
+    "css-loader": "0.28.0",
+    "extract-text-webpack-plugin": "2.1.0",
+    "less": "2.7.2",
+    "less-loader": "4.0.3",
+    "mocha": "3.2.0",
+    "style-loader": "0.16.1",
+    "stylelint-webpack-plugin": "0.7.0",
+    "ts-loader": "2.0.3",
+    "tslint": "4.5.1",
+    "tslint-loader": "3.5.2",
+    "tslint-microsoft-contrib": "4.0.0",
+    "typescript": "2.2.2",
+    "webpack": "2.3.3"
+  }
+}

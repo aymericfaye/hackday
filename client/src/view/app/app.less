@@ -1,0 +1,44 @@
+@import "./reset.less";
+@import "../../../src/util/style/index.less";
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html { font-size: 62.5% }
+
+html, body { overflow: hidden }
+
+body {
+  background-color: @mainBg;
+  font-family: @font;
+  font-size: @fontSize;
+  color: @mainBlue;
+}
+
+:global {
+
+  #screenLayer {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    -webkit-overflow-scrolling: touch;
+    transform: translate3d(0, 0, 0) // Layerize
+
+    // Responsive example
+    // @media @desktop {}
+  }
+
+  body.has-sticky-footer {
+    #screenLayer {
+      height: ~"calc(100vh - @{footerHeight})";
+    }
+  }
+
+  .logo {
+    margin: 20px;
+  }
+}

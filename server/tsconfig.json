@@ -11,7 +11,8 @@
     "strictNullChecks": true,
     "skipLibCheck": true,
     "typeRoots": [ "@types/", "node_modules/@types/" ],
-    "types": [ "es6-promise", "express", "express-serve-static-core", "node" ]
+    "types": [ "es6-promise", "express", "express-serve-static-core", "node" ],
+    "jsx": "react"
   },
   "compileOnSave": false,
   "buildOnSave": false,
